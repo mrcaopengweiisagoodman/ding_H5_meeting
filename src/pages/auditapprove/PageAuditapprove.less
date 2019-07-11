@@ -1,0 +1,92 @@
+/* 内审审批 */
+@import './../../assets/css/reset.less';
+
+.auditapprove{
+	.btnArr{
+		position: absolute;
+		right: 6vw;
+		bottom: 1.2rem;
+		z-index: 2;
+		.del_btn{
+			/* position: absolute;
+			right: 6vw;
+			bottom: 1.2rem; */
+		}
+	}
+	.no-date{
+		width: 100vw;
+		height: 100vw;
+		line-height: 100vw;
+		text-align: center;
+		font-size: 20px;
+	}
+	.listBox{
+		position: relative;
+		display: block;	
+		width: 94vw;
+		margin: 1rem auto 0;
+		background: #FFFFFF;
+		border: 1px solid rgba(25, 31, 37, 0.08);
+		border-radius: 6px;
+		.am-list-item{
+			padding-left: 3vw;
+		}
+		.meetingName{
+			p{
+				min-height: 4.4rem;
+				line-height: 4.4rem;
+				font-size: 1.4rem;
+			}
+		}
+		.list{
+			padding: 0 3vw;
+			font-size: 1.4rem;
+			.tenderingTitle{
+				span{
+					min-width: 24vw;
+					color: #78787a;
+				}
+				p{
+					min-height: 4.4rem;
+					line-height: 4.4rem;
+					font-weight: bold;
+				}
+			}
+		}
+		.box_b{
+			position: absolute;
+			right: 1vw;
+			bottom: .85rem;
+		}
+		.line{
+			.line_gray();
+			width: 88vw;
+		}
+	}
+
+	.manArr{
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-wrap: wrap;
+		width: 70vw;
+		min-height: 4.2rem;
+		margin: 0 2vw;
+		.manBox{
+			position: static;
+			.color_b{
+				height: 2.7rem;
+				line-height: 2.7rem;
+			}
+		}
+	}
+	/* 新增页面按钮 */
+	.addTenderingBtn{
+		position: fixed;
+		right: 3vw;
+		bottom: 7vh;
+		width: 6.4rem;
+		height: 6.4rem;
+		z-index: 2;
+	}
+}
