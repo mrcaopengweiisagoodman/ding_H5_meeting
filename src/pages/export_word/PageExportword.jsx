@@ -92,7 +92,7 @@ class Auditapprove extends Component {
                                         return (
                                             <div className="lh_4_4rem p_rl_6v f_14 c_333">
                                                 {el.username}：{el.message} &nbsp;&nbsp;&nbsp;&nbsp;
-                                                描述：{el.content} 
+                                                描述：{el.content == "undefined" ? '同意' : el.content} 
                                             </div>
                                         )
                                     })
@@ -106,7 +106,7 @@ class Auditapprove extends Component {
                                             return (
                                                 <div className="lh_4_4rem p_rl_6v f_14 c_333">
                                                     {el.username}：{el.message} &nbsp;&nbsp;&nbsp;&nbsp;
-                                                    描述：{el.content} 
+                                                    描述：{el.content == "undefined" ? '同意' : el.content} 
                                                 </div>
                                             )
                                         } 
@@ -130,7 +130,7 @@ class Auditapprove extends Component {
                         <div className=""></div>
                 	    { historyCom }
                     </div>
-                    <div className="btnBlueLong position_f_0_0" style={{width: '100%'}} onClick={this.exportWord}>导出word</div>
+                    <div className="btnBlueLong position_f_0_0" style={{width: '100%',borderRadius: '0px'}} onClick={this.exportWord}>导出word</div>
                 </div>
             );
         } 

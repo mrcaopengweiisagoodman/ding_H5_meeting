@@ -165,7 +165,7 @@ class Auditapprove extends Component {
                     <div className={dataHistory.issues.length ? "fujian p_b_4_4rem" : 'isHide'}>
                         {historyCom}
                     </div>
-                    <div className="btnBlueLong position_f_0_0" style={{width: '100%'}} onClick={this.exportExcel}>导出excel</div>
+                    <div className="btnBlueLong position_f_0_0" style={{width: '100%',borderRadius: '0px'}} onClick={this.exportExcel}>导出excel</div>
                 </div>
             );
         } 

@@ -217,23 +217,27 @@ class DetailcontractForm extends Component {
            	let showMsgListCom = showMsgListData.map((v,i) =>{
                 // result: 0，1，2
                 let arr = ['同意','反对','弃权'];
+                let color = ['#2d87f7','#f05642','#78787a'];
                 // mtMessageType：0是留言 1是钉消息 2投票描述
                 console.log(i,v.mtMessageType)
-                let str ;
+                let str , color_;
                 if (v.mtMessageType == 1) {
                     str = 'Ding';
+                    color_ = '#2d87f7';
                 } else if (v.mtMessageType == 2) {
-                    str = arr[v.result]
+                    str = arr[v.result];
+                    color_ = color[v.result];
                 } else if (v.mtMessageType == 0) {
                     str = '评论';
-                }
+                    color_ = '#2d87f7';
+                } 
            		return <div className="list">
                   		<div className="flex_bc">
                   			<div className="h_50">{v.mtMessageUsername}</div>
-                  			<div className="h_50">{ str}</div>
+                  			<div className="h_50" style={{color: color_}}>{ str }</div>
                   		</div>
                      	<div className="line_gray"></div>
-              			<div className="h_50">{v.mtMessageContent}</div>
+              			<div className='h_50'>{v.mtMessageContent == 'undefined' ? "同意" : v.mtMessageContent}</div>
                      	<div className="line_gray"></div>
               			<p className="text_right h_50">{moment(v.createTime).format('YYYY.MM.DD HH:mm')}</p>
                      	<div className="line_box"></div>

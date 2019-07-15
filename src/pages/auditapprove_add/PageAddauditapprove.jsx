@@ -120,7 +120,7 @@ class AddauditapproveForm extends Component {
                    fileType: "pdf"
                 }];*/
           
-            if (!approver.length || !enclosure.length || !meetingTime) {
+            if (!approver.length || !meetingTime) {
                 dd.device.notification.alert({
                     message: "您有未填写项！",
                     title: "温馨提示",

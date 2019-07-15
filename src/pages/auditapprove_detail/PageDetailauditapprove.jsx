@@ -127,7 +127,7 @@ class DetailcontractForm extends Component {
                     });
                     return
                 }
-                
+                console.log(value)
                 dd.device.notification.showPreloader({
                     text: "提交中...", //loading显示的字符，空表示不显示文字
                     showIcon: true, //是否显示icon，默认true
