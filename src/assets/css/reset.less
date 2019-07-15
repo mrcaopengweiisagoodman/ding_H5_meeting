@@ -71,6 +71,7 @@ img{border:none;}
 
 
 /* 内边距 */
+.p_l_3v{padding-left: 3vw;}  
 .p_l_4v{padding-left: 4vw;}  
 .p_b_4_4rem{padding-bottom: 4.4rem;}  
 .p_rl_2v{padding: 0 2vw;}  
@@ -105,6 +106,7 @@ img{border:none;}
 	/* 字体颜色 */
 @c_red: red;
 @c_fff: #FFFFFF;
+.c_trans{color: transparent;}
 .color_r {color: #f05642}
 .color_b {color: #2d87f7}
 .color_b2 {color: #28a2ff}
@@ -124,6 +126,11 @@ img{border:none;}
 /* 布局 */
 .position_a_0_0{
 	position: absolute;
+	bottom: 0;
+	left: 0;
+}	
+.position_f_0_0{
+	position: fixed;
 	bottom: 0;
 	left: 0;
 }	
@@ -180,6 +187,7 @@ img{border:none;}
 	align-items: center;
 	flex-wrap: wrap;
 }
+.flex_1{flex: 1;}
 .line_gray () {
 	/*width: 86.4vw;*/
 	width: 100%;
@@ -287,6 +295,18 @@ img{border:none;}
 	font-size: 1.2rem;
 	color: #ffffff;
 	background: #2d87f7;
+	border-radius: 4px;
+	border: none;
+}
+.btnGrayShort{
+	display: block;
+	width: 16vw;
+	height: 7vw;
+	line-height: 7vw;
+	text-align: center;
+	font-size: 1.2rem;
+	color: #ffffff;
+	background: #eeeeee;
 	border-radius: 4px;
 	border: none;
 }

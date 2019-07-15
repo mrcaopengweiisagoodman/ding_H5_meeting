@@ -8,6 +8,9 @@ import Addauditapprove from 'pages/auditapprove_add/';
 import Detailauditapprove from 'pages/auditapprove_detail/';
 import Auditcontract from 'pages/auditcontract/';
 import Result from 'pages/result/';
+import Addmeeting from 'pages/meeting_add/';
+import ExportWord from 'pages/export_word/';
+import ExportExcel from 'pages/export_excel/';
 
 
 const rootRoute =
@@ -18,6 +21,9 @@ const rootRoute =
 			<Detailauditapprove.route />
 			<Auditcontract.route />
 			<Result.route />
+			<Addmeeting.route />
+			<ExportWord.route />
+			<ExportExcel.route />
 		</div>
     </HashRouter>;
 

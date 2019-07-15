@@ -295,7 +295,7 @@ class DingReadyMine {
 		    types:["photo","camera","file","space"],//PC端支持["photo","file","space"]
 		    onSuccess : function(result) {
 
-		    	dd.device.notification.alert({
+		    	/*dd.device.notification.alert({
 					message: "文件上传成功----" + JSON.stringify(result),
 					title: "选取文件",
 					buttonName: "确定"
@@ -309,7 +309,7 @@ class DingReadyMine {
 					message: 'CORP_ID--- ' + JSON.stringify(CORP_ID),
 					title: "选取文件",
 					buttonName: "确定"
-				});
+				});*/
 
 
 		    	let enclosure;

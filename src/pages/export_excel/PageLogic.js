@@ -5,7 +5,8 @@ export default {
     defaults(props) {
         //初始的state
         return {  
-        	dataHistory: null
+        	dataHistory: null,
+        	mtIssueId: -1
         }
     },
 	/**

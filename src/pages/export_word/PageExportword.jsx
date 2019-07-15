@@ -27,16 +27,16 @@ class Auditapprove extends Component {
         mydingready.ddReady({pageTitle: '会议记录预览'});
     }
     componentDidMount () {
-        this.getTenderingList({state: 0});
+        this.getTenderingList({state: 0,type: 0});
     }
   
     /**
     * 获取对应议题列表信息
     */
-    getTenderingList = ({state ,searchWord }) => {
+    getTenderingList = ({state ,searchWord,type }) => {
         let userId = mydingready.globalData.userId ? mydingready.globalData.userId 
                                                    : localStorage.getItem('userId');
-        let url = `${AUTH_URL}meeting/mt-meeting/word/export?meetingId=${this.props.params.id}&userId=${userId}`
+        let url = `${AUTH_URL}meeting/mt-meeting/word/export?meetingId=${this.props.params.id}&userId=${userId}&type=${type}`
         fetch(url,{
             method: 'POST'
         })
@@ -44,6 +44,19 @@ class Auditapprove extends Component {
         .then(data => {
        
             if (data.state == 'SUCCESS') {
+                if (type == 1) {
+                    // word文档导出
+                    dd.device.notification.alert({
+                        message: '请在钉消息中查看！',
+                        title: "温馨提示",
+                        buttonName: "确定"
+                    });
+                    let timer = setTimeout(function(){
+                        Control.go(-1);
+                        clearTimeout(timer);
+                    },2000);
+                    return
+                }
                 common.dispatchFn({context: this,val:{dataHistory: data.values.map}});
                 
                 
@@ -61,6 +74,9 @@ class Auditapprove extends Component {
             });
         })
     }  
+    exportWord = () => {
+        this.getTenderingList({type: 1});
+    }
     render() {
         const { dataHistory } = this.state;
         let userId = localStorage.getItem("userId");
@@ -72,7 +88,7 @@ class Auditapprove extends Component {
                             <div className="lh_4_4rem p_rl_6v f_14 c_333">出席人：</div>
                             <div className="lh_4_4rem p_rl_3v f_14 c_333">
                                 {
-                                    v.attend.map( el => {
+                                    v.joinInfo.map( el => {
                                         return (
                                             <div className="lh_4_4rem p_rl_6v f_14 c_333">
                                                 {el.username}：{el.message} &nbsp;&nbsp;&nbsp;&nbsp;
@@ -85,7 +101,7 @@ class Auditapprove extends Component {
                             <div className="lh_4_4rem p_rl_6v f_14 c_333">列席人：</div>
                             <div className="lh_4_4rem p_rl_3v f_14 c_333">
                                 {
-                                    v.joinInfo.map( el => {
+                                    v.attend.map( el => {
                                         if (el.content && el.content != '无') {
                                             return (
                                                 <div className="lh_4_4rem p_rl_6v f_14 c_333">
@@ -114,7 +130,7 @@ class Auditapprove extends Component {
                         <div className=""></div>
                 	    { historyCom }
                     </div>
-                    <div className="btnBlueLong position_a_0_0" style={{width: '100%'}}>导出word</div>
+                    <div className="btnBlueLong position_f_0_0" style={{width: '100%'}} onClick={this.exportWord}>导出word</div>
                 </div>
             );
         } 

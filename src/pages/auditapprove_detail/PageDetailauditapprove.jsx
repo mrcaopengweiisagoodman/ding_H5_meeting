@@ -262,7 +262,7 @@ class DetailcontractForm extends Component {
                
                 return <div className="fj_list">
                             <div className="flex_bc" style={{minHeight: '4.8rem',padding: '1rem 3vw'}} onClick={()=>this.changeMtissueId(v.mtIssueId)}>
-                                <p className="per_w_70 textOverflow_1">{idx+1}、{v.mtIssueName}</p>
+                                <p className="per_w_70 textOverflow_1 f_14">{idx+1}、{v.mtIssueName}</p>
                                 <div className="flex p_l_4v">
                                     <span>未表决</span>
                                     <img className="fileIcon" src={`${IMGCOMMONURI}${jiantou}.png`} />
@@ -276,7 +276,7 @@ class DetailcontractForm extends Component {
                                         return (
                                             <div className="flex_bc p_rl_4v" 
                                                 style={{minHeight: '4.8rem',padding: '1rem 3vw'}}
-                                                onClick={() => this.previewFile(JSON.parse(el.mtIssueContent))}>
+                                                onClick={() => this.previewFile(el)}>
                                                 <img className="fileIcon_2" src={`${IMGCOMMONURI}${fileTypeImg}`} />
                                                 <p className="textOverflow_1 mtName">{el.fileName}</p>
                                             </div>
@@ -337,7 +337,7 @@ class DetailcontractForm extends Component {
                         <span>议题列表</span>
                         <div className="flex">
                             <Link to={`exportword/${this.props.params.id}`} className="btn_333 manBox color_b m_tb_0">会议记录</Link>
-                            <Link to='/' className="btn_333 manBox color_b m_tb_0">表决详情</Link>
+                            <Link to={`exportexcel/${this.props.params.id}`} className="btn_333 manBox color_b m_tb_0">表决详情</Link>
                         </div>
                     </div>
                     <div className={issues.length ? "fujian" : 'isHide'}>

@@ -134,7 +134,12 @@ class Auditapprove extends Component {
             return <span>{v.title}</span>
         })
         let listCom = listData.map(v => {
-             return <div className="position_r">
+            let allowSee = v.meetingAttendpeopleId + v.meetingJoinpeopleId;
+            let allowFlag;
+            if (allowSee.indexOf(userId) > -1) {
+                allowFlag = true;
+            }
+             return <div className={allowFlag ? "position_r" : 'isHide'}>
                     <div className="listBox" onClick={()=>this.goDetail(v.mtMeetingId,v.meetingAttendpeopleId + ',' + v.meetingJoinpeopleId)}>
                         <div className="flex_bc meetingName p_rl_3v">
                             <p>{v.meetingName}</p>
@@ -144,8 +149,8 @@ class Auditapprove extends Component {
                             <p>{moment(v.createTime).format('YYYY.MM.DD HH:mm')}</p>
                         </div>
                     </div>
-                    {/*<div className={v.meetingOriginatorId == userId ? "btnArr flex" : "isHide"}>*/}
-                    <div className="btnArr flex">
+                    <div className={v.meetingOriginatorId == userId ? "btnArr flex" : "isHide"}>
+                    {/*<div className="btnArr flex">*/}
                         <div className="del_btn btnRedShort m_r_2v" onClick={(e)=>this.delMeeting(e,v.mtMeetingId)}>删除</div>
                         <div className="addMeeting btnBlueShort" style={{height: '2.2rem',lineHeight: '2.2rem'}} onClick={()=>this.goPage(v.mtMeetingId,v.meetingName)}>添加议题</div>
                     </div>
