@@ -40,7 +40,9 @@ export default {
             issueId: '',
             // 投票结果
             result: '0',
-            men: ''
+            men: '',
+            // 要显示文件的的议题id
+            mtIssueId: -1
 
         }
     },

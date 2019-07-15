@@ -119,9 +119,9 @@ class DetailcontractForm extends Component {
         let { id,emplIds ,result,userIds,writeMsg,issueId} = this.state;
         this.props.form.validateFields((error,value) => {
             if (!error) {
-                if (!value.description) {
+                if (!value.description && result > 0) {
                     dd.device.notification.alert({
-                        message: "请填写内容！",
+                        message: "请填写理由！",
                         title: "温馨提示",
                         buttonName: "确定"
                     });
@@ -227,35 +227,68 @@ class DetailcontractForm extends Component {
             val: { isShowToupiao: false }
         })
     }
+    changeMtissueId = (id) => {
+        let { mtIssueId } = this.state;
+        if (id == mtIssueId) {
+            id = -1;
+        }
+        common.dispatchFn({
+            context: this,
+            val: { mtIssueId: id }
+        })
+    }
     render() {
         let administrators = [],
             myUserId = localStorage.getItem('userId');
         const { getFieldProps } = this.props.form;
-
       
-        let { men,isShowToupiao,result ,isLimitMsg,styleInfo,contractType ,issues ,eventType ,approver,copyPerson ,enclosure ,detailData,searchVal,checking_type,isRebut} = this.state;
+        let { mtIssueId,men,isShowToupiao,result ,isLimitMsg,styleInfo,contractType ,issues ,eventType ,approver,copyPerson ,enclosure ,detailData,searchVal,checking_type,isRebut} = this.state;
         if (detailData) {
-
-            /*dd.device.notification.alert({
-                message: "议题列表---" + JSON.stringify(issues),
-                title: "警告",
-                buttonName: "确定"
-            });
-*/
             let inx = men.indexOf(localStorage.getItem('userId'));
-            let issuesCom = issues.map( v => {
+            let issuesCom = issues.map( (v,idx) => {
                  let fileTypeImg, 
+                    arr = [],
+                    jiantou,
                     fileTypeImgArr = ['ppt.png','ppt.png','excel.png','excel.png','word.png','word.png'];
                 let i = ['ppt','pptx','xls','xlsx','doc','docx'].indexOf(v.fileType);
+
+                let enclosureData = JSON.parse(v.mtIssueContent);
+                if (!Array.isArray(enclosureData)) {
+                    arr.push(enclosureData);
+                    enclosureData = arr;
+                }
                 i != -1 ? fileTypeImg = fileTypeImgArr[i] : fileTypeImg = 'unknown.png';
+                mtIssueId == v.mtIssueId ? jiantou = 'down' : jiantou = 'up';
+               
                 return <div className="fj_list">
-                            <div className="file" onClick={() => this.previewFile(JSON.parse(v.mtIssueContent))}>
-                                <img className="fileIcon" src={`${IMGCOMMONURI}${fileTypeImg}`} />
-                                <p className="textOverflow_1">{v.mtIssueName}</p>
+                            <div className="flex_bc" style={{minHeight: '4.8rem',padding: '1rem 3vw'}} onClick={()=>this.changeMtissueId(v.mtIssueId)}>
+                                <p className="per_w_70 textOverflow_1">{idx+1}、{v.mtIssueName}</p>
+                                <div className="flex p_l_4v">
+                                    <span>未表决</span>
+                                    <img className="fileIcon" src={`${IMGCOMMONURI}${jiantou}.png`} />
+                                </div>
                             </div>
-                            <div className="flex_end box">
-                                <div className={inx > -1 ? "btn_c" : 'isHide'} onClick={()=>this.toupiao(v.mtIssueId)}>发起投票</div>
-                                <Link to={`result/${detailData.mtMeetingId}/${v.mtIssueId}`} className="btn_c">结果/评论</Link>
+                            <div className="line_gray"></div>
+                            <div className={mtIssueId == v.mtIssueId ? "" : "isHide"}>
+                                {/* 议题附件 */}
+                                { 
+                                    enclosureData.map( (el) => {
+                                        return (
+                                            <div className="flex_bc p_rl_4v" 
+                                                style={{minHeight: '4.8rem',padding: '1rem 3vw'}}
+                                                onClick={() => this.previewFile(JSON.parse(el.mtIssueContent))}>
+                                                <img className="fileIcon_2" src={`${IMGCOMMONURI}${fileTypeImg}`} />
+                                                <p className="textOverflow_1 mtName">{el.fileName}</p>
+                                            </div>
+                                        )
+                                            
+                                    })
+
+                                }
+                                <div className="flex_ec box m_tb_10">
+                                    <div className={inx > -1 && !v.issueVote? "btnBlueShort m_r_2v" : 'isHide'} onClick={()=>this.toupiao(v.mtIssueId)}>表决</div>
+                                    <Link to={`result/${detailData.mtMeetingId}/${v.mtIssueId}`} className="btnBlueShort m_r_2v">结果/评论</Link>
+                                </div>
                             </div>
                         </div>
             })
@@ -300,21 +333,23 @@ class DetailcontractForm extends Component {
                             {copyPersonCom}
                         </div>
                     </div>
-                    <p className={issues.length ? "title" : 'isHide'}>会议附件议题</p>
+                    <div className={issues.length ? "title flex_bc" : 'isHide'}>
+                        <span>议题列表</span>
+                        <div className="flex">
+                            <Link to={`exportword/${this.props.params.id}`} className="btn_333 manBox color_b m_tb_0">会议记录</Link>
+                            <Link to='/' className="btn_333 manBox color_b m_tb_0">表决详情</Link>
+                        </div>
+                    </div>
                     <div className={issues.length ? "fujian" : 'isHide'}>
                         {issuesCom}
                     </div>
                     
 
 
-                    
-                    
-
-
                     {/* 留言板 --- 出席人、列席人有权限 */}
                     <div className={isShowToupiao ? "toupiao" : "isHide"}>
                         <div className='biddingName'> 
-                            <p className="title">发起投票</p>
+                            <p className="title">发起表决</p>
                             <TextareaItem 
                                 className="textArea"
                                 rows={5}
@@ -329,15 +364,15 @@ class DetailcontractForm extends Component {
                           {/* 待我审批进入之后，合同操作按钮 */}
                         <div className="operationBtns flex_ac">
                             <div className={result == 0 ? "btn btn_b" : "btn btn_e"} onClick={() => this.resultFn('0')}>同意</div>
-                            <div className={result == 1 ? "btn btn_b" : "btn btn_e"} onClick={() => this.resultFn('1')}>拒绝</div>
+                            <div className={result == 1 ? "btn btn_b" : "btn btn_e"} onClick={() => this.resultFn('1')}>反对</div>
                             <div className={result == 2 ? "btn btn_b" : "btn btn_e"} onClick={() => this.resultFn('2')}>弃权</div>
                         </div>
                         <div className="flex_ac" style={{width: "100%"}}>
-                            <button className="btnBlueLong" type="submit" onClick={this.close} style={{marginBottom: '1vh',background: '#ce0707'}}>关闭</button>
-                            <button className="btnBlueLong" type="submit" onClick={this.submit} style={{marginBottom: '1vh'}}>提交</button>
+                            <button className="btnRedLong" type="submit" onClick={this.close} style={{marginBottom: '1vh',background: '#ce0707'}}>关闭</button>
+                            <button className="btnBlueLong" type="submit" onClick={this.submit} style={{marginBottom: '1vh'}}>表决</button>
                         </div>
                     </div>
-                </div>
+                </div>  
             )
         } else {
             return (<div>

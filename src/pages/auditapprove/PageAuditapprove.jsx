@@ -99,8 +99,23 @@ class Auditapprove extends Component {
             });
         })
     }
-    goPage = (id) => {
-        Control.go(-1);
+    goPage = (id,name) => {
+        Control.go('/meetingadd',{meetingName: name,meetingId: id});
+    }
+    goDetail = (mtMeetingId,manIdStr) => {
+        let arr = manIdStr.split(','),
+            userId = localStorage.getItem('userId'),
+            inx = arr.indexOf(userId);
+       /* if (inx < 0) {
+            dd.device.notification.alert({
+                message: "您无权限查看！",
+                title: "温馨提示",
+                buttonName: "确定"
+            });
+            return
+        }*/
+        Control.go(`/detailauditapprove/${mtMeetingId}`);
+
     }
     render() {
         const { tabs , listData ,searchVal,approver} = this.state;
@@ -120,7 +135,7 @@ class Auditapprove extends Component {
         })
         let listCom = listData.map(v => {
              return <div className="position_r">
-                    <Link to={`/detailauditapprove/${v.mtMeetingId}`} className="listBox">
+                    <div className="listBox" onClick={()=>this.goDetail(v.mtMeetingId,v.meetingAttendpeopleId + ',' + v.meetingJoinpeopleId)}>
                         <div className="flex_bc meetingName p_rl_3v">
                             <p>{v.meetingName}</p>
                             <p>议题数量:{v.meetingIssueNum}</p>
@@ -128,11 +143,11 @@ class Auditapprove extends Component {
                         <div className="list meetingName flex_bc">
                             <p>{moment(v.createTime).format('YYYY.MM.DD HH:mm')}</p>
                         </div>
-                    </Link>
+                    </div>
                     {/*<div className={v.meetingOriginatorId == userId ? "btnArr flex" : "isHide"}>*/}
                     <div className="btnArr flex">
-                        <div className="del_btn btnRedShort m_r" onClick={(e)=>this.delMeeting(e,v.mtMeetingId)}>删除</div>
-                        <div className="addMeeting btnBlueShort" onClick={()=>this.goPage(v.mtMeetingId)}>添加议题</div>
+                        <div className="del_btn btnRedShort m_r_2v" onClick={(e)=>this.delMeeting(e,v.mtMeetingId)}>删除</div>
+                        <div className="addMeeting btnBlueShort" style={{height: '2.2rem',lineHeight: '2.2rem'}} onClick={()=>this.goPage(v.mtMeetingId,v.meetingName)}>添加议题</div>
                     </div>
                 </div>
                  

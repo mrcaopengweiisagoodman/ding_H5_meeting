@@ -113,6 +113,8 @@ class DetailcontractForm extends Component {
                             text: '提交成功！', 
                             duration: 2, 
                         });
+                        _this.getDetail(_this.props.params.id);   
+                        _this.showMsgList(_this.props.params.id);   
                         let timer = setTimeout(function(){
                             
                             _this.props.form.setFieldsValue({

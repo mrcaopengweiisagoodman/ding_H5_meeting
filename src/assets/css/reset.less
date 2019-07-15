@@ -42,7 +42,6 @@
 ul,ol,li{list-style-type:none;}
 a{ text-decoration:none;}
 img{border:none;}
-.p_rl_3v{padding: 0 3vw;}
 /* 两行溢出,省略号 */
 .textOverflow () {
 	text-overflow: -o-ellipsis-lastline;
@@ -65,14 +64,43 @@ img{border:none;}
 	-webkit-box-orient: vertical;
 }
 /* 公共样式 */
+/* 外边距 */
+.m_r_2v{margin-right: 2vw;}
+.m_tb_0{margin-top: 0 ;margin-bottom: 0;}
+.m_tb_10{margin: 10px 0;}
+
+
+/* 内边距 */
+.p_l_4v{padding-left: 4vw;}  
+.p_b_4_4rem{padding-bottom: 4.4rem;}  
+.p_rl_2v{padding: 0 2vw;}  
+.p_rl_3v{padding: 0 3vw;}
+.p_rl_4v{padding: 0 4vw;}  
+.p_rl_5v{padding: 0 5vw;}  
+.p_rl_6v{padding: 0 6vw;}  
+
+
+/* 百分比 */
+.per_w_65{width: 65%;}
+.per_w_70{width: 70%;}
+.per_w_100{width: 100%;}
+
+/* 高 */
+.h_4_4rem{height: 4.4rem;}
+.lh_4_4rem{line-height: 4.4rem;}
+
+
 .isHide{display: none;}
 .isShow{display: block;}
 .isFlex{display: flex;}
 	/* 字体大小 */
+.f_wei{font-weight: bold;}
 @f_14: 1.4rem;
+.f_13{font-size: 1.3rem};
 .f_14{font-size: 1.4rem};
-.f_17{font-size: 1.7rem};
+.f_15{font-size: 1.5rem};
 .f_16{font-size: 1.6rem};
+.f_17{font-size: 1.7rem};
 @f_15: 1.5rem;
 	/* 字体颜色 */
 @c_red: red;
@@ -86,9 +114,20 @@ img{border:none;}
 .color_gray {color: #78787a}
 .color_gray2 {color: #c5c4ca}
 .color_orange { color: #fd943f; }
+.color_333 { color: #333333; }
 	/* 背景色 */
 .bg_ff{background: #FFFFFF;}
 .bg_gray{background: #f6f6f6;}
+
+
+
+/* 布局 */
+.position_a_0_0{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}	
+
 .flex{
 	display: flex;
 	align-items: center;
@@ -242,14 +281,36 @@ img{border:none;}
 .btnBlueShort{
 	display: block;
 	width: 16vw;
-	height: 2.2rem;
-	line-height: 2.2rem;
+	height: 7vw;
+	line-height: 7vw;
 	text-align: center;
 	font-size: 1.2rem;
 	color: #ffffff;
 	background: #2d87f7;
 	border-radius: 4px;
 	border: none;
+}
+.btn_c{
+	width: 23vw;
+	height: 9vw;
+	line-height: 9vw;
+	margin: 0 10px;
+	text-align: center;
+	font-size: 14px;
+	color: #333333;
+	border: 1px solid #eee;
+	border-radius: 6px;
+}
+.btn_333{
+	width: 23vw;
+	height: 7vw;
+	line-height: 7vw;
+	margin: 0 10px;
+	text-align: center;
+	font-size: 14px;
+	color: #333333;
+	border: 1px solid #333333;
+	border-radius: 6px;
 }
 /* 搜索框样式修改 */
 .searchBox{
@@ -303,5 +364,3 @@ img{border:none;}
 	color: rgba(25, 31, 37, 0.4);
 	background: #f6f6f6;
 }
-/* 外边距 */
-.m_r{margin-right: 2vw;}

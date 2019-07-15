@@ -20,11 +20,11 @@ class UtilsFile {
 				.then( res => res.json())
 				.then( result => {
 					if (result.state == 'SUCCESS') {
-						dd.device.notification.alert({
+						/*dd.device.notification.alert({
 	                        message: "接口获取的spaceId---" + result.values.spaceId,
 	                        title: "警告",
 	                        buttonName: "确定"
-	                    });
+	                    });*/
 						mydingready.ddReady({
 							context: context,
 							ddApiState: ddApiState,
