@@ -286,7 +286,8 @@ class AddauditapproveForm extends Component {
                         <List.Item arrow="horizontal" className="f_16">会议时间</List.Item>
                     </DatePicker>
                     <div className="line_gray"></div>
-                    <p className="title">会议附件</p>
+                    {/*<p className="title">会议附件</p>
+                    <EnclosureCom data={enclosure} context={this} />*/}
                     {/* <div className="fileBox">
                         {enclosureCom}
                         <div className="file" onClick={() => this.toDdJsApi('uploadFile')}>
@@ -294,7 +295,6 @@ class AddauditapproveForm extends Component {
                             <p>上传附件</p>
                         </div>
                     </div>*/}
-                    <EnclosureCom data={enclosure} context={this} />
                     <div className="selectedMan">
                         <p>出席人</p>
                         <div className="manArr">

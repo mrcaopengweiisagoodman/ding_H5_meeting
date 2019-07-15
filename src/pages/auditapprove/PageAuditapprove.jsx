@@ -136,7 +136,7 @@ class Auditapprove extends Component {
         let listCom = listData.map(v => {
             let allowSee = v.meetingAttendpeopleId + v.meetingJoinpeopleId;
             let allowFlag;
-            if (allowSee.indexOf(userId) > -1) {
+            if (allowSee.indexOf(userId) > -1 || userId == v.meetingOriginatorId) {
                 allowFlag = true;
             }
              return <div className={allowFlag ? "position_r" : 'isHide'}>
