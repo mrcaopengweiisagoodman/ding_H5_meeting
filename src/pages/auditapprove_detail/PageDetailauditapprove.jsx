@@ -264,7 +264,8 @@ class DetailcontractForm extends Component {
                             <div className="flex_bc" style={{minHeight: '4.8rem',padding: '1rem 3vw'}} onClick={()=>this.changeMtissueId(v.mtIssueId)}>
                                 <p className="per_w_70 textOverflow_1 f_14">{idx+1}、{v.mtIssueName}</p>
                                 <div className="flex p_l_4v">
-                                    <span>未表决</span>
+                                    <span className={inx > -1 && !v.issueVote ? 'color_r_c' : 'isHide'}>未表决</span>
+                                    <span className={inx > -1 && v.issueVote ? 'color_g_d' : 'isHide'}>已表决</span>
                                     <img className="fileIcon" src={`${IMGCOMMONURI}${jiantou}.png`} />
                                 </div>
                             </div>
@@ -286,7 +287,7 @@ class DetailcontractForm extends Component {
 
                                 }
                                 <div className="flex_ec box m_tb_10">
-                                    <div className={inx > -1 && !v.issueVote? "btnBlueShort m_r_2v" : 'isHide'} onClick={()=>this.toupiao(v.mtIssueId)}>表决</div>
+                                    <div className={inx > -1 && !v.issueVote ? "btnBlueShort m_r_2v" : 'isHide'} onClick={()=>this.toupiao(v.mtIssueId)}>表决</div>
                                     <Link to={`result/${detailData.mtMeetingId}/${v.mtIssueId}`} className="btnBlueShort m_r_2v">结果/评论</Link>
                                 </div>
                             </div>

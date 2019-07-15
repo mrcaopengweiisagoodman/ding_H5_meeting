@@ -243,7 +243,7 @@ class DetailcontractForm extends Component {
            		return <div>
            			<div className="listHeight flex_bc">
                         <span className="leftText f_14 color_gray">{v.name}</span>
-                        <div onClick={()=>this.dingFn(resultData.mtIssueId,v.emplId,v.name)}>Ding一下</div>
+                        <div className="btnBlueShort" onClick={()=>this.dingFn(resultData.mtIssueId,v.emplId,v.name)}>Ding一下</div>
                     </div>
                     <div className="line_gray"></div>
            		</div>
@@ -269,7 +269,7 @@ class DetailcontractForm extends Component {
                   	</div>
               		 {/* 留言板 --- 发起人没有权限 */}
                     <div className="line_box"></div>
-                    <div>
+                    <div className={myUserId == meetingOriginatorId ? 'isHide' : ''}>
                         <div className='biddingName'> 
                             <TextareaItem 
                                 className="textArea"
