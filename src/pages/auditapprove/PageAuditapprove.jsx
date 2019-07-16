@@ -115,7 +115,10 @@ class Auditapprove extends Component {
             return
         }*/
         Control.go(`/detailauditapprove/${mtMeetingId}`);
-
+    }
+    /* 统计页面 */
+    goMeeting = () => {
+        Control.go('/statistical');
     }
     render() {
         const { tabs , listData ,searchVal,approver} = this.state;
@@ -158,7 +161,7 @@ class Auditapprove extends Component {
                  
         })
         return (
-            <div className="auditapprove">
+            <div className="auditapprove p_b_4_4rem">
             	<Tabs tabs={tabs}
                     initialPage={0}
                     onChange={(tab, index) => this.getTenderingList({state: tab.state})}
@@ -198,6 +201,7 @@ class Auditapprove extends Component {
                     </div>
                 </Tabs>
                 <Link type='img' src={`${IMGCOMMONURI}add_big.png`} className='addTenderingBtn' to={ '/addauditapprove' } />
+                <div className="position_f_0_0 btnBlueLong" style={{width: '100%',borderRadius: 0}} onClick={this.goMeeting}>会议统计</div>
             </div>
         );
     }

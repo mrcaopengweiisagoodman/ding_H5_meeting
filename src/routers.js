@@ -11,6 +11,7 @@ import Result from 'pages/result/';
 import Addmeeting from 'pages/meeting_add/';
 import ExportWord from 'pages/export_word/';
 import ExportExcel from 'pages/export_excel/';
+import Statistical from 'pages/statistical/';
 
 
 const rootRoute =
@@ -24,6 +25,7 @@ const rootRoute =
 			<Addmeeting.route />
 			<ExportWord.route />
 			<ExportExcel.route />
+			<Statistical.route />
 		</div>
     </HashRouter>;
 
