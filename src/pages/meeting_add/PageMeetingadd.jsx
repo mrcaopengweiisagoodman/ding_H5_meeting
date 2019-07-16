@@ -129,7 +129,7 @@ class AddauditapproveForm extends Component {
                             },
                             onFail : function(err) {}
                         });
-                        Control.go(-1);
+                        Control.go(`/detailauditapprove/${this.props.params.id}`);
                         return
                     }
                     dd.device.notification.alert({

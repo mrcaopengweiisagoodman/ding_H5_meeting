@@ -275,11 +275,14 @@ class DetailcontractForm extends Component {
                                 { 
                                     enclosureData.map( (el) => {
                                         return (
-                                            <div className="flex_bc p_rl_4v" 
-                                                style={{minHeight: '4.8rem',padding: '1rem 3vw'}}
-                                                onClick={() => this.previewFile(el)}>
-                                                <img className="fileIcon_2" src={`${IMGCOMMONURI}${fileTypeImg}`} />
-                                                <p className="textOverflow_1 mtName">{el.fileName}</p>
+                                            <div>
+                                                <div className="flex_bc p_rl_4v" 
+                                                    style={{minHeight: '4.8rem',padding: '1rem 3vw'}}
+                                                    onClick={() => this.previewFile(el)}>
+                                                    <img className="fileIcon_2" src={`${IMGCOMMONURI}${fileTypeImg}`} />
+                                                    <p className="textOverflow_1 mtName">{el.fileName}</p>
+                                                </div>
+                                                <div className="line_gray"></div>
                                             </div>
                                         )
                                             

@@ -5,7 +5,7 @@ export default {
     page: Page,
     route: () => (
         <div>
-            <Route exact component={Page} path= '/meetingadd' >
+            <Route exact component={Page} path= '/meetingadd/:id' >
 
             </Route>
         </div>)

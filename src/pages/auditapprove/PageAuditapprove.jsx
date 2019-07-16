@@ -37,7 +37,7 @@ class Auditapprove extends Component {
     getTenderingList = ({state ,searchWord }) => {
         let userId = mydingready.globalData.userId ? mydingready.globalData.userId 
                                                    : localStorage.getItem('userId');
-        let url = `${AUTH_URL}meeting/mt-meeting/list?type=${state}&pageNum=1&pageSize=1000`
+        let url = `${AUTH_URL}meeting/mt-meeting/list?type=${state}&pageNum=1&pageSize=1000&userId=${userId}`
         fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -100,7 +100,7 @@ class Auditapprove extends Component {
         })
     }
     goPage = (id,name) => {
-        Control.go('/meetingadd',{meetingName: name,meetingId: id});
+        Control.go(`/meetingadd/${id}`,{meetingName: name,meetingId: id});
     }
     goDetail = (mtMeetingId,manIdStr) => {
         let arr = manIdStr.split(','),
