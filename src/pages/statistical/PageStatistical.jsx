@@ -22,6 +22,7 @@ class StatisticalCom extends Component {
     }
 
     getList = (startTime,endTime,date) => {
+        let startTime_1 ,endTime_1;
         if (!startTime) {
             dd.device.notification.alert({
                 message: '请选择开始时间！',
@@ -38,23 +39,26 @@ class StatisticalCom extends Component {
             });
             return
         }
-            console.log(startTime)
         if (startTime > endTime) {
-            startTime = endTime;
-            endTime = startTime;
-        } 
+            startTime_1 = endTime;
+            endTime_1 = startTime;
+        } else {
+            startTime_1 = startTime;
+            endTime_1 = endTime;
+        }
         startTime = common.formatTime({
-            date: startTime,
+            date: startTime_1,
             str_ymd: '-',
             str_dm: 'T',
             str_hms: ':'
         });
         endTime = common.formatTime({
-            date: endTime,
+            date: endTime_1,
             str_ymd: '-',
             str_dm: 'T',
             str_hms: ':'
         });
+
         fetch(`${AUTH_URL}meeting/mt-meeting/search/time?startTime=${startTime}&endTime=${endTime}`,{
             method: 'GET',
         })
@@ -95,6 +99,7 @@ class StatisticalCom extends Component {
     }
     render() {
         const { startTime, endTime ,dataList ,moreStr} = this.state; 
+
         const listCom = dataList.list.map(v=>{
             let time = v.meetingTime.split('T').join(' ');
             return  <Link to={`/detailauditapprove/${v.mtMeetingId}`} className="border_gray">
@@ -138,7 +143,7 @@ class StatisticalCom extends Component {
                 <div className="p_rl_3v">
                     {listCom}
                 </div>
-                <div className={dataList.length ? "isHide" : "lh_4_4rem f_14 c_333 text_center"}>暂无数据</div>
+                <div className={dataList.list.length ? "isHide" : "lh_4_4rem f_14 c_333 text_center"}>暂无数据</div>
                 {/*<div className="lh_4_4rem f_14 c_333 text_center">{moreStr}</div>*/}
             </div>
         );
