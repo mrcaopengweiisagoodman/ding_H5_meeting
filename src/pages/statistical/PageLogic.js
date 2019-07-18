@@ -12,7 +12,10 @@ export default {
                 meetingCount: 0,
                 issueCount: 0
             },
-            moreStr: '点击加载更多'
+            moreStr: '点击加载更多',
+            pageNum: 1,
+            // pageSize: 10,
+            pageSize: 5
         }
     },
     /**

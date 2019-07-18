@@ -21,7 +21,13 @@ class StatisticalCom extends Component {
         mydingready.ddReady({pageTitle: '统计'});
     }
 
-    getList = (startTime,endTime,date) => {
+    getList = ({
+        startTime,
+        endTime,
+        date,// 需要更新的state
+        pageSize_,
+        pageNum_
+    }) => {
         let startTime_1 ,endTime_1;
         if (!startTime) {
             dd.device.notification.alert({
@@ -58,13 +64,18 @@ class StatisticalCom extends Component {
             str_dm: 'T',
             str_hms: ':'
         });
-
-        fetch(`${AUTH_URL}meeting/mt-meeting/search/time?startTime=${startTime}&endTime=${endTime}`,{
+        let userId = localStorage.getItem('userId');
+        let { pageNum, pageSize , dataList } = this.state;
+        if (pageNum_) pageNum = pageNum_;
+        if (pageSize_) pageSize = pageSize_;
+        fetch(`${AUTH_URL}meeting/mt-meeting/search/time?startTime=${startTime}&endTime=${endTime}&userId=${userId}&pageNum=${pageNum}&pageSize=${pageSize}`,{
             method: 'GET',
         })
         .then(res => res.json())
         .then(data => {
             if (data.state == 'SUCCESS') {
+              
+                data.values.list = dataList.list.concat(data.values.list);
                 common.dispatchFn({
                     context: this,
                     val: {
@@ -75,7 +86,7 @@ class StatisticalCom extends Component {
                 return
             }
             dd.device.notification.alert({
-                message: data.values.msg,
+                message: data.info,
                 title: '温馨提示',
                 buttonName: "确定"
             });
@@ -90,12 +101,43 @@ class StatisticalCom extends Component {
         })
         let { startTime , endTime } = this.state;
         if (startTime && 'endTime') {
-            this.getList(startTime,date,{[str]:date});
+            // this.getList(startTime,date,{[str]:date});
+            this.getList({
+                startTime: startTime,
+                endTime: date,
+                date: {[str]:date}
+            });
             return
         }
         if (str == 'startTime' && endTime) {
-            this.getList(date,endTime,{[str]:date});
+            // this.getList(date,endTime,{[str]:date});
+            this.getList({
+                startTime: date,
+                endTime: endTime,
+                date: {[str]:date}
+            });
         }
+    }
+    /*加载更多*/
+    getMore = () => {
+        let { pageNum , pageSize , startTime , endTime , dataList } = this.state;
+        pageNum++;
+        if (dataList.list.length == dataList.meetingCount) {
+            common.dispatchFn({
+                context: this,
+                val: {
+                    moreStr: '---我是有底线的---'
+                }
+            })
+            return
+        }
+        this.getList({
+            startTime: startTime,
+            endTime: endTime,
+            pageNum_: pageNum,
+            pageSize_: pageSize,
+            date: {pageNum: pageNum}
+        });
     }
     render() {
         const { startTime, endTime ,dataList ,moreStr} = this.state; 
@@ -144,7 +186,7 @@ class StatisticalCom extends Component {
                     {listCom}
                 </div>
                 <div className={dataList.list.length ? "isHide" : "lh_4_4rem f_14 c_333 text_center"}>暂无数据</div>
-                {/*<div className="lh_4_4rem f_14 c_333 text_center">{moreStr}</div>*/}
+                <div className={dataList.list.length ? "lh_4_4rem f_14 c_333 text_center" : "isHide"} onClick={this.getMore}>{moreStr}</div>
             </div>
         );
     }
