@@ -26,8 +26,10 @@ class StatisticalCom extends Component {
         endTime,
         date,// 需要更新的state
         pageSize_,
-        pageNum_
+        pageNum_,
+        dataList_
     }) => {
+
         let startTime_1 ,endTime_1;
         if (!startTime) {
             dd.device.notification.alert({
@@ -64,8 +66,10 @@ class StatisticalCom extends Component {
             str_dm: 'T',
             str_hms: ':'
         });
+
+
         let userId = localStorage.getItem('userId');
-        let { pageNum, pageSize , dataList } = this.state;
+        let { pageNum, pageSize , dataList , isDataChange } = this.state;
         if (pageNum_) pageNum = pageNum_;
         if (pageSize_) pageSize = pageSize_;
         fetch(`${AUTH_URL}meeting/mt-meeting/search/time?startTime=${startTime}&endTime=${endTime}&userId=${userId}&pageNum=${pageNum}&pageSize=${pageSize}`,{
@@ -74,8 +78,12 @@ class StatisticalCom extends Component {
         .then(res => res.json())
         .then(data => {
             if (data.state == 'SUCCESS') {
-              
-                data.values.list = dataList.list.concat(data.values.list);
+                // console.log('-----------',dataList.list)
+                if (dataList_) {
+                    data.values.list = dataList_.list.concat(data.values.list);
+                } else {
+                    data.values.list = dataList.list.concat(data.values.list);
+                }
                 common.dispatchFn({
                     context: this,
                     val: {
@@ -93,19 +101,28 @@ class StatisticalCom extends Component {
         })
     }
     dateChange = (date,str) => {
+        let { startTime , endTime } = this.state;
         common.dispatchFn({
             context: this,
             val: {
-                [str]: date
+                [str]: date,
+                dataList: {
+                    list: [],
+                    meetingCount: 0,
+                    issueCount: 0
+                },
             }   
         })
-        let { startTime , endTime } = this.state;
-        if (startTime && 'endTime') {
-            // this.getList(startTime,date,{[str]:date});
+        // console.log('选取',date,str)
+        if (startTime && str == 'endTime') {
             this.getList({
                 startTime: startTime,
                 endTime: date,
-                date: {[str]:date}
+                dataList_: {
+                    list: [],
+                    meetingCount: 0,
+                    issueCount: 0
+                },
             });
             return
         }
@@ -114,8 +131,13 @@ class StatisticalCom extends Component {
             this.getList({
                 startTime: date,
                 endTime: endTime,
-                date: {[str]:date}
+                dataList_: {
+                    list: [],
+                    meetingCount: 0,
+                    issueCount: 0
+                },
             });
+            return
         }
     }
     /*加载更多*/
@@ -141,7 +163,6 @@ class StatisticalCom extends Component {
     }
     render() {
         const { startTime, endTime ,dataList ,moreStr} = this.state; 
-
         const listCom = dataList.list.map(v=>{
             let time = v.meetingTime.split('T').join(' ');
             return  <Link to={`/detailauditapprove/${v.mtMeetingId}`} className="border_gray">
