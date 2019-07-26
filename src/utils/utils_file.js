@@ -49,6 +49,10 @@ class UtilsFile {
 				break;
 			}
 		}	
+		if (!enclosure.length) {
+			localStorage.removeItem('hasFile');
+			common.dispatchFn({context: context,val: {mtIssueName : ''}});
+		}
 		common.dispatchFn({context: context,val: data});
 	}
 	

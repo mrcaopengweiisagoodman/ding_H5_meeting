@@ -7,8 +7,8 @@ import {
     TextareaItem,
     Toast,
     DatePicker,
-    List 
-
+    List ,
+    Checkbox
 } from 'antd-mobile';
 import moment from 'moment';
 import {
@@ -23,7 +23,7 @@ import ApproverCom from './../../components/approvercom/Approvercom';
 import EnclosureCom from './../../components/enclosurecom/EnclosureCom';
 
 const { AUTH_URL, IMGCOMMONURI,CONFIG_APP_URL } = require(`config/develop.json`);
-
+const CheckboxItem = Checkbox.CheckboxItem;
 class AddauditapproveForm extends Component {
     constructor(props) { 
         super(props, logic);     
@@ -31,7 +31,16 @@ class AddauditapproveForm extends Component {
 
     }
     componentDidMount () {
+        console.log(Control)
         console.log(Control.state)
+       /* let { enclosure } = this.state;
+        let hasFile = localStorage.getItem('hasFile');
+        // hasFile为yes，第一次上传文件
+        if (hasFile == 'yes') {
+            this.props.form.setFieldsValue({
+                mtIssueName: enclosure[0].fileName
+            });
+        }*/
         common.dispatchFn({
             context: this,
             val: {
@@ -84,7 +93,7 @@ class AddauditapproveForm extends Component {
   
     submit = () => {
         this.props.form.validateFields((error, value) => {
-            let { enclosure,meetingId } = this.state;
+            let { enclosure,meetingId , isNotice } = this.state;
             if (!enclosure.length) {
                 dd.device.notification.alert({
                     message: "您有未填写项！",
@@ -106,8 +115,9 @@ class AddauditapproveForm extends Component {
                     return
                 }
                 enclosure = encodeURIComponent(JSON.stringify(enclosure));
-
-                fetch(`${AUTH_URL}meeting/mt-issue/create?attachment=${enclosure}`,{
+                let url = encodeURIComponent(`${CONFIG_APP_URL}#/detailauditapprove/${meetingId}`);
+                
+                fetch(`${AUTH_URL}meeting/mt-issue/create?attachment=${enclosure}&isNotice=${isNotice}&redirectUrl=${url}`,{
                     method: 'POST',
                     headers: {
                         'Content-Type': "application/json"
@@ -141,10 +151,31 @@ class AddauditapproveForm extends Component {
             }
         });
     }
-
+    onChange = (isNotice) => {
+        // isNotice == 'true' ? isNotice = true : isNotice = false;
+        common.dispatchFn({
+            context: this,
+            val: {
+                isNotice: isNotice
+            }   
+        });
+    }
+    /* 议题名称input内容改变 */
+    inputChange = (e) => {
+        common.dispatchFn({
+            context: this,
+            val: {
+                mtIssueName: e
+            }   
+        });
+    }
+    componentWillUnmount () {
+        localStorage.removeItem('hasFile');
+    }
     render() {
         const { getFieldProps } = this.props.form;
-        const { enclosure ,meetingName ,testStr,meetingTime} = this.state; 
+        const { enclosure ,meetingName ,testStr,meetingTime,isNotice} = this.state; 
+        
         return (
             <div className="addauditapprove addcontract">
                 {/* <form onSubmit={this.submit}> */}
@@ -159,16 +190,28 @@ class AddauditapproveForm extends Component {
                         <InputItem 
                             className="inputItem"
                             rows={2}
+                            onBlur={(e)=>this.inputChange(e)}
                             placeholder="请填写议题名称（必填）"
                             {...getFieldProps('mtIssueName',{
                                 rules:[{required: false,message:'请填写会议名称（必填）'}]
                             })}
                         ></InputItem> 
                     </div>
+                    {/*<div className="name flex" style={{padding: '0 3vw'}}>
+                        <span className="leftText f_16">议题名称</span>
+                        <div className="inputItem h_4_4rem textOverflow_1">{enclosure.length ? enclosure[0].fileName : ''}</div> 
+                    </div>*/}
                     <div className="line_gray"></div>
                     <p className="title">会议附件</p>
-                 
-                    <EnclosureCom data={enclosure} context={this} />
+                    <EnclosureCom data={enclosure} context={this} flag="meetingAdd" />
+                    <div className="line_gray"></div>
+                    <div className="name flex" style={{padding: '0 3vw'}}>
+                        <span className="leftText f_16 color_333">是否发送通知</span>
+                        <div className="inputItem am-list-item">
+                            <CheckboxItem key={'true'} checked={isNotice == 'true' ? true : false} onChange={() => this.onChange('true')}>是</CheckboxItem>
+                            <CheckboxItem key={'false'} checked={isNotice == 'false' ? true : false} onChange={() => this.onChange('false')}>否</CheckboxItem>
+                        </div>
+                    </div>
                     <div className="line_gray"></div>
                     <button className="btnBlueLong" type="submit" onClick={this.submit}>添加议题</button>
                 {/* </form> */}

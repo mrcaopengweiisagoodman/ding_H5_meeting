@@ -322,9 +322,22 @@ class DingReadyMine {
 								enclosure: enclosure
 							}
 						});
+			    		// 
+	        			let hasFile = localStorage.getItem('hasFile');
+	        			if (!hasFile && !context.state.mtIssueName) {
+				    		/*dd.device.notification.alert({
+								message: "------" +  enclosure[0].fileName + '[]]]' + hasFile,
+								title: "选取文件", 
+								buttonName: "确定"
+							});*/
+	        				localStorage.setItem('hasFile','yes');
+	    				  	context.props.form.setFieldsValue({
+				                mtIssueName: enclosure[0].fileName
+				            });
+	        			}
+		    			localStorage.removeItem('hasFile');
 		    			return
 		    		}
-		    		// 
 	    			enclosure = context.state.enclosureBz.concat(result.data);
 		    		common.dispatchFn({
 						context: context,

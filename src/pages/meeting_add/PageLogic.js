@@ -10,6 +10,8 @@ export default {
         	meetingId: 0, // 会议id
         	meetingName: '', // 会议名称
         	enclosure: [], // 上传文件之后返回的数据数组，
+            isNotice: 'true',
+            mtIssueName: ''
         }
     },
     /**

@@ -21,7 +21,7 @@ class Enclosurecom extends React.Component {
     setStateFn = () => {
         this.setState({
             data: this.props.context.state.enclosure,   
-            isDetail: this.props.isDetail,
+            isDetail: this.props.isDetail
         })
     }
     /*
