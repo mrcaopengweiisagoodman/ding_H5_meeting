@@ -325,14 +325,15 @@ class DingReadyMine {
 			    		// 
 	        			let hasFile = localStorage.getItem('hasFile');
 	        			if (!hasFile && !context.state.mtIssueName) {
-				    		/*dd.device.notification.alert({
+				    		/*dd.device.notification.alert({z
 								message: "------" +  enclosure[0].fileName + '[]]]' + hasFile,
 								title: "选取文件", 
 								buttonName: "确定"
 							});*/
 	        				localStorage.setItem('hasFile','yes');
+	        				let a = enclosure[0].fileName.split('.')[0];
 	    				  	context.props.form.setFieldsValue({
-				                mtIssueName: enclosure[0].fileName
+				                mtIssueName: a
 				            });
 	        			}
 		    			localStorage.removeItem('hasFile');

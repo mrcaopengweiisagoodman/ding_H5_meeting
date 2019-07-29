@@ -240,18 +240,24 @@ class DetailcontractForm extends Component {
     /* 发送消息 */
     sendMsg = (id) => {
         let url = encodeURIComponent(`${CONFIG_APP_URL}#/detailauditapprove/${this.state.issueId}`);
-        fetch(`${AUTH_URL}meeting/mt-issue-vote/create?id=${id}&redirectUrl=${url}`,{
+        fetch(`${AUTH_URL}meeting/mt-meeting/notice/send/${id}?redirectUrl=${url}`,{
             method: 'POST',
         })
         .then(res => res.json())
         .then(data => {
             if (data.state == 'SUCCESS') {
                 dd.device.notification.alert({
-                    message: '消息已发送！' ,
+                    message: '通知已发送！' ,
                     title: "温馨提示",
                     buttonName: "确定"
                 });
+                return
             }
+            dd.device.notification.alert({
+                message: '通知已发送失败！' ,
+                title: "温馨提示",
+                buttonName: "确定"
+            });
         });
     }
     render() {
@@ -357,7 +363,7 @@ class DetailcontractForm extends Component {
                     <div className={issues.length ? "title flex_bc" : 'isHide'}>
                         <span>议题列表</span>
                         <div className="flex">
-                            <div style={{width: '19vw'}} className="btn_333 manBox color_b m_tb_0" onClick={()=>this.sendMsg(this.props.params.id)}>发送消息</div>
+                            <div style={{width: '19vw'}} className="btn_333 manBox color_b m_tb_0" onClick={()=>this.sendMsg(this.props.params.id)}>发送通知</div>
                             <Link style={{width: '19vw'}} to={`exportword/${this.props.params.id}`} className="btn_333 manBox color_b m_tb_0">会议记录</Link>
                             <Link style={{width: '19vw'}} to={`exportexcel/${this.props.params.id}`} className="btn_333 manBox color_b m_tb_0">表决详情</Link>
                         </div>

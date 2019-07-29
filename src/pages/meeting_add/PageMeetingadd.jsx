@@ -115,7 +115,7 @@ class AddauditapproveForm extends Component {
                     return
                 }
                 enclosure = encodeURIComponent(JSON.stringify(enclosure));
-                let url = encodeURIComponent(`${CONFIG_APP_URL}#/detailauditapprove/${meetingId}`);
+                let url = encodeURIComponent(`${CONFIG_APP_URL}#/detailauditapprove/`);
                 
                 fetch(`${AUTH_URL}meeting/mt-issue/create?attachment=${enclosure}&isNotice=${isNotice}&redirectUrl=${url}`,{
                     method: 'POST',
